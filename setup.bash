@@ -64,8 +64,10 @@ InstallDconfCli() {
 }
 
 InstallGogh() {
-  # Install the Flat terminal colors 
+  # Install different GNOME terminal themes.
+  # TODO: Set defaults, check to see if themes alaready downloaded
   wget -O xt  http://git.io/v3D4z && chmod +x xt && ./xt && rm xt
+  wget -O xt  https://git.io/v5mPp && chmod +x xt && ./xt && rm xt
 }
 
 main() {

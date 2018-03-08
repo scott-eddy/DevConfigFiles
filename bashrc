@@ -79,3 +79,9 @@ function upstr()
 {
     echo "$(up "$1" && pwd)";
 }
+
+# Allow local machines to futs with settings like PATH etc
+if [ -f ~/.bashrc_local ]; then
+    . ~/.bashrc_local
+fi
+
