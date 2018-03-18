@@ -1,6 +1,9 @@
 " Turn on line numbers
 set number
 
+" Turn on syntax highlighting
+syntax on
+
 " Use the system clipboard for yank / delete / paste operations 
 set clipboard=unnamedplus
 

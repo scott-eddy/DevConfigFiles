@@ -80,6 +80,12 @@ function upstr()
     echo "$(up "$1" && pwd)";
 }
 
+# Bash completion if available
+if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+fi
+
+
 # Allow local machines to futs with settings like PATH etc
 if [ -f ~/.bashrc_local ]; then
     . ~/.bashrc_local

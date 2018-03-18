@@ -1,3 +1,4 @@
+!/bin/bash
 ######
 # Attempts to setup the environment such that
 # the following tools are setup for a developer:
@@ -55,12 +56,21 @@ InstallTmuxPluginManager() {
 }
 
 InstallDconfCli() {
-  if [ ${OS_NAME} == "Ubuntu" ]; then
-    echo "Installing dconf-cli"
-    sudo apt-get install dconf-cli
-  else
-    echo -e "${RED} Unknown OS_NAME ${NC}"
-  fi
+  case "${OS_NAME}" in
+    "Ubuntu")
+      echo "Installing dconf-cli for Ubuntu"
+      sudo apt-get install dconf-cli
+      ;;
+
+    "Arch Linux")
+      echo "Installing dconf for Arch"
+      # Note: assumes sudo already configured with Arch which may not always be the case
+      sudo pacman -S dconf 
+      ;;
+  *)
+    echo -e "${RED} Unknown OS ${OS_NAME} ${NC}"
+    ;;
+  esac
 }
 
 InstallGogh() {
@@ -70,14 +80,32 @@ InstallGogh() {
   wget -O xt  https://git.io/v5mPp && chmod +x xt && ./xt && rm xt
 }
 
+InstallWget() {
+  case "${OS_NAME}" in
+    "Arch Linux")
+      echo "Installing wget for Arch"
+      # Note: assumes sudo already configured with Arch which may not always be the case
+      sudo pacman -S wget
+      ;;
+  *)
+    echo -e "${RED} Unknown OS ${OS_NAME} ${NC}"
+    ;;
+  esac
+}
+
 main() {
   if ! GetDistroVersion; then
     exit 1
   fi
+
   InstallTmuxPluginManager
 
-  if [ ${OS_NAME} != "Mac" ]; then
+  if [ "${OS_NAME}" != "Mac" ]; then
     InstallDconfCli
+    if ! command -v wget >/dev/null; then
+      InstallWget
+    fi
+
     InstallGogh
   fi
 }
