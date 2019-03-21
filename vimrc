@@ -1,3 +1,5 @@
+execute pathogen#infect()
+
 " Turn on line numbers
 set number
 
