@@ -55,6 +55,16 @@ InstallTmuxPluginManager() {
   fi
 }
 
+InstallVimPluginManager() {
+  # Setup vim plugin manager
+  if [ -d "${HOME}/.vim/plugins/bundle" ]; then
+    echo -e "${YELLOW}${BOLD}WARNING:${RESET_BOLD} vim plugin manager already installed, skipping${NC}"
+  else
+    mkdir -p ~/.vim/autoload ~/.vim/bundle && \
+    curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+  fi
+}
+
 InstallDconfCli() {
   case "${OS_NAME}" in
     "Ubuntu")
@@ -71,13 +81,6 @@ InstallDconfCli() {
     echo -e "${RED} Unknown OS ${OS_NAME} ${NC}"
     ;;
   esac
-}
-
-InstallGogh() {
-  # Install different GNOME terminal themes.
-  # TODO: Set defaults, check to see if themes alaready downloaded
-  wget -O xt  http://git.io/v3D4z && chmod +x xt && ./xt && rm xt
-  wget -O xt  https://git.io/v5mPp && chmod +x xt && ./xt && rm xt
 }
 
 InstallWget() {
@@ -99,14 +102,13 @@ main() {
   fi
 
   InstallTmuxPluginManager
+  InstallVimPluginManager
 
   if [ "${OS_NAME}" != "Mac" ]; then
     InstallDconfCli
     if ! command -v wget >/dev/null; then
       InstallWget
     fi
-
-    InstallGogh
   fi
 }
 
